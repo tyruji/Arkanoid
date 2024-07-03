@@ -10,8 +10,6 @@ public partial class Player : CharacterBody2D
 	{
 		Vector2 velocity = Velocity;
 
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		float direction = Input.GetAxis( "left", "right" );
 		if( direction != 0 )
 		{
