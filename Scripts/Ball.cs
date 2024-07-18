@@ -12,7 +12,7 @@ public partial class Ball : CharacterBody2D
 	
 	private Vector2 _velocity = Vector2.Zero;
 	
-	private Vector2 _dirFromPlayer = Vector2.Zero;
+	private Vector2 _dirFromPlayer = new Vector2( 0, -29 );
 	
 	private Godot.Collections.Array<Rid> _rayExceptionArray = null;
 	
@@ -20,7 +20,6 @@ public partial class Ball : CharacterBody2D
 	{
 		 _rayExceptionArray = new Godot.Collections.Array<Rid> { GetRid() };
 		_player = ( Player ) GetTree().GetFirstNodeInGroup( "player" );
-		_dirFromPlayer = GlobalPosition - _player.GlobalPosition;
 		_player.OnShoot += Shoot;
 	}
 	
@@ -39,35 +38,17 @@ public partial class Ball : CharacterBody2D
 		var normal = collision.GetNormal();
 		var collider = collision.GetCollider();
 		
+		if( collider is Block block )
+		{
+			block.Hit( collision.GetPosition() );
+		}
+		
 		if( collider is Player )
 		{
 			_velocity = BounceFromPlayerVelocity();
 			return;
 		}
 		
-		_velocity = _velocity.Bounce( normal );
-	}
-	
-	private void OnBodyEntered( Node2D body )
-	{
-		GD.Print( "collided with: ", body );
-		
-		if( body is Player )
-		{
-			_velocity = BounceFromPlayerVelocity();
-			return;
-		}
-		
-		var spaceState = GetWorld2D().DirectSpaceState;
-		var query = PhysicsRayQueryParameters2D.Create( GlobalPosition, body.GlobalPosition );
-		query.Exclude = _rayExceptionArray;
-		var result = spaceState.IntersectRay( query );
-		
-		if( result.Count <= 0 ) return;
-		
-			// Get the collision normal via raycast
-		Vector2 normal = ( Vector2 ) result[ "normal" ];
-		GD.Print( "normal: ", normal );
 		_velocity = _velocity.Bounce( normal );
 	}
 	

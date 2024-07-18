@@ -1,0 +1,92 @@
+[gd_scene load_steps=11 format=3 uid="uid://b8j0avpll0lal"]
+
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_msraj"]
+[ext_resource type="Texture2D" uid="uid://dsljh11ftfnne" path="res://Graphics/paddle.png" id="2_tlnhg"]
+[ext_resource type="PackedScene" uid="uid://om6008xdaaa0" path="res://Prefabs/ball.tscn" id="3_at0ig"]
+[ext_resource type="Script" path="res://Scripts/BallManager.cs" id="4_o5vxb"]
+[ext_resource type="PackedScene" uid="uid://bqi0mae702b86" path="res://Prefabs/game_over_area.tscn" id="5_ijtw5"]
+[ext_resource type="Script" path="res://Scripts/BlockManager.cs" id="6_sq0s2"]
+[ext_resource type="PackedScene" uid="uid://cyrperspknahh" path="res://Prefabs/blue_block.tscn" id="7_sn15i"]
+[ext_resource type="PackedScene" uid="uid://dkcim67ea37dc" path="res://Prefabs/red_block.tscn" id="8_5iwbr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqpbi"]
+size = Vector2(192, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y8et7"]
+size = Vector2(74, 1254)
+
+[node name="Game" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(603, 551)
+collision_mask = 0
+script = ExtResource("1_msraj")
+_Speed = 600.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_bqpbi")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+modulate = Color(0.698039, 0.780392, 0.92549, 1)
+texture = ExtResource("2_tlnhg")
+
+[node name="Ball" parent="." instance=ExtResource("3_at0ig")]
+
+[node name="BallManager" type="Node2D" parent="."]
+position = Vector2(603, 551)
+script = ExtResource("4_o5vxb")
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Wall" type="StaticBody2D" parent="Walls"]
+position = Vector2(-37, 319)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall"]
+shape = SubResource("RectangleShape2D_y8et7")
+
+[node name="Wall2" type="StaticBody2D" parent="Walls"]
+position = Vector2(1189, 385)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall2"]
+shape = SubResource("RectangleShape2D_y8et7")
+
+[node name="Wall3" type="StaticBody2D" parent="Walls"]
+position = Vector2(551, 749)
+rotation = -1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall3"]
+shape = SubResource("RectangleShape2D_y8et7")
+
+[node name="GameOverArea" parent="Walls" instance=ExtResource("5_ijtw5")]
+
+[node name="Wall4" type="StaticBody2D" parent="Walls"]
+position = Vector2(595, -34)
+rotation = -1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall4"]
+shape = SubResource("RectangleShape2D_y8et7")
+
+[node name="BlockManager" type="Node2D" parent="."]
+script = ExtResource("6_sq0s2")
+
+[node name="BlueBlock" parent="BlockManager" instance=ExtResource("7_sn15i")]
+
+[node name="BlueBlock2" parent="BlockManager" instance=ExtResource("7_sn15i")]
+position = Vector2(405, 128)
+
+[node name="RedBlock" parent="BlockManager" instance=ExtResource("8_5iwbr")]
+
+[node name="RedBlock2" parent="BlockManager" instance=ExtResource("8_5iwbr")]
+position = Vector2(533, 128)
+
+[node name="BlueBlock3" parent="BlockManager" instance=ExtResource("7_sn15i")]
+position = Vector2(660, 128)
+
+[node name="BlueBlock4" parent="BlockManager" instance=ExtResource("7_sn15i")]
+position = Vector2(915, 128)
+
+[node name="RedBlock3" parent="BlockManager" instance=ExtResource("8_5iwbr")]
+position = Vector2(788, 128)
+
+[node name="RedBlock4" parent="BlockManager" instance=ExtResource("8_5iwbr")]
+position = Vector2(1043, 128)

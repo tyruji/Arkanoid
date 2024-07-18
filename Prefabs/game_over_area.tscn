@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqi0mae702b86"]
+
+[ext_resource type="Script" path="res://Scripts/GameOverArea.cs" id="1_j48tf"]
+[ext_resource type="PackedScene" uid="uid://d0g6shyglblfd" path="res://Scenes/game_over.tscn" id="2_ie3m2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y8et7"]
+size = Vector2(74, 1254)
+
+[node name="GameOverArea" type="Area2D"]
+position = Vector2(551, 673)
+rotation = -1.5708
+script = ExtResource("1_j48tf")
+_GameOverScene = ExtResource("2_ie3m2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_y8et7")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

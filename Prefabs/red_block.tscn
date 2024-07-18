@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkcim67ea37dc"]
+
+[ext_resource type="Script" path="res://Scripts/Block.cs" id="1_qi3es"]
+[ext_resource type="Texture2D" uid="uid://g45e8cwfjfi2" path="res://Graphics/brick.png" id="2_k0v1y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_koark"]
+size = Vector2(128, 32)
+
+[node name="RedBlock" type="StaticBody2D"]
+position = Vector2(278, 128)
+script = ExtResource("1_qi3es")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_koark")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.988235, 0.270588, 0.14902, 1)
+texture = ExtResource("2_k0v1y")
